@@ -4,36 +4,45 @@
     {
         static void Main(string[] args)
         {
-            int SoBatKi;
-            
-            SoBatKi = int.Parse(Console.ReadLine());
-            int[] mang = NhapMang(SoBatKi);
-            Console.WriteLine($"so nho nhat trong mang la:{PhanTuNhoNhatTrongMang(mang)}");
-            Console.WriteLine($"vi tri cua max:{ViTriCuaSoLonNhatTrongMang(mang)}");
-            bool ketQua = KiemTraSoAm(mang);
-            if (ketQua)
-                Console.WriteLine($"co so am");
-            else
-                Console.WriteLine($"khong co so am");
+            //int SoBatKi;
 
+            //SoBatKi = int.Parse(Console.ReadLine());
+            //string? input = Console.ReadLine();
+            //char[] charArr = input.ToCharArray();
+            //Console.WriteLine(InHoaMotChuCai('a'));
+            Console.WriteLine(InHoaChuoi(NhapMangChar()));
         }
 
         static int[] NhapMang(int soLuongPhanTu)
         {
             int[] mang = new int[soLuongPhanTu];
             for (int i = 0; i < mang.Length; i++)
+            {
+                Console.WriteLine($"Nhap phan tu thu {i}:");
                 mang[i] = int.Parse(Console.ReadLine());
+            }
+            return mang;
+        }
+        static char[] NhapMangChar()
+        {
+            string input = Console.ReadLine();
+
+            char[] mang = new char[input.Length];
+            for (int i = 0; i < mang.Length; i++)
+            {
+                mang[i] = input[i];
+            }
             return mang;
         }
 
         static int PhanTuNhoNhatTrongMang(int[] mang)
         {
             int min = mang[0];
-            for(int i = 0; i < mang.Length; i++)
+            for (int i = 0; i < mang.Length; i++)
             {
                 if (mang[i] < min)
                     min = mang[i];
-                    
+
             }
             return min;
         }
@@ -46,7 +55,7 @@
                 if (mang[i] > max)
                 {
                     max = mang[i];
-                    viTriCuaMax = i ;
+                    viTriCuaMax = i;
                 }
 
             }
@@ -64,7 +73,82 @@
             }
             return false;
         }
-        
 
+        static void XuatRaGiaTriCuaCacSoTrongMang(int[] mang)
+        {
+            for (int i = 0; i < mang.Length; i++)
+            {
+                Console.WriteLine($"Phan tu thu {i}: {mang[i]}");
+            }
+        }
+
+        static int TraVeSoMinDuong(int[] mang)
+        {
+            int min = mang[0];
+            for (int i = 0; i < mang.Length; i++)
+            {
+                if (mang[i] < min && mang[i] > 0)
+                {
+                    min = mang[i];
+                }
+            }
+            return min;
+        }
+
+        static bool KiemTraSoNguyenTo(int soNguyen)
+        {
+            if (soNguyen == 1)
+                return true;
+            for (int i = 2; i < soNguyen; i++)
+            {
+                if (soNguyen % i == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        static char[] InHoaChuoi(char[] charArr)
+        {
+            for(int i = 0; i < charArr.Length; i++)
+                charArr[i] = InHoaMotChuCai(charArr[i]);
+
+            return charArr;
+        }
+
+        static char InHoaMotChuCai(char moChuCai)
+        {
+            if (!CoPhaiLaChuThuong(moChuCai))
+                return moChuCai;
+
+            int giatriIntCuaC = (int)moChuCai;
+            giatriIntCuaC -= 32;
+            moChuCai = (char)giatriIntCuaC;
+            return moChuCai;
+        }
+
+        static bool CoPhaiLaSo(char chuCaiCanKiemTra)
+        {
+            if ((int)chuCaiCanKiemTra >= 48 && (int)chuCaiCanKiemTra <= 57)
+                return true;
+            else
+                return false;
+        }
+        static bool CoPhaiLaChuInHoa(char chuCaiCanKiemTra)
+        {
+            if ((int)chuCaiCanKiemTra >= 65 && (int)chuCaiCanKiemTra <= 90)
+                return true;
+            else
+                return false;
+        }
+
+        static bool CoPhaiLaChuThuong(char chuCaiCanKiemTra)
+        {
+            if ((int)chuCaiCanKiemTra >= 97 && (int)chuCaiCanKiemTra <= 122)
+                return true;
+            else
+                return false;
+        }
     }
 }
