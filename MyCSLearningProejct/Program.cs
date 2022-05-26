@@ -4,15 +4,95 @@
     {
         static void Main(string[] args)
         {
-            //int SoBatKi;
-
-            //SoBatKi = int.Parse(Console.ReadLine());
-            //string? input = Console.ReadLine();
-            //char[] charArr = input.ToCharArray();
-            //Console.WriteLine(InHoaMotChuCai('a'));
-            Console.WriteLine(InHoaChuoi(NhapMangChar()));
+            DSLK danhSachLienKet = new DSLK();
+            danhSachLienKet.Init();
+            danhSachLienKet.NhapDanhSachKhongTrung();
+           
+            //Node nodeVuaTim = danhSachLienKet.TimNode(1);
+            //danhSachLienKet.ThemTruocNodeA(nodeVuaTim, 99);
+            danhSachLienKet.XuatDanhSach();
+            int i = danhSachLienKet.SoLuongPhanTu(danhSachLienKet.nodeDau);
+            Console.Write(i);
         }
 
+
+        static void OutputSubject(Subject subject)
+        {
+            Console.WriteLine($"{subject.subjectName}:{subject.grade}");
+        }
+        
+        static Date InputDate()
+        {
+            Console.WriteLine($"Input DD/MM/YY");
+            Date inputDate;
+            int day = int.Parse(Console.ReadLine());
+            //while (day < 1 || day > 31)
+            //{
+            //    Console.WriteLine($"Input DD/MM/YY");
+            //    day = int.Parse(Console.ReadLine());
+            //}
+            int month = int.Parse(Console.ReadLine());
+            //while (month < 1 || month > 12)
+            //{
+            //    Console.WriteLine($"Input DD/MM/YY");
+            //    month = int.Parse(Console.ReadLine());
+            //}
+            int year = int.Parse(Console.ReadLine());
+            //while (year < 0)
+            //{
+            //    Console.WriteLine($"Input DD/MM/YY");
+            //    year = int.Parse(Console.ReadLine());
+            //}
+            inputDate.day = day;
+            inputDate.month = month;
+            inputDate.year = year;
+            return inputDate;
+        }
+        static void OutputDate(Date dateToOutput)
+        {
+            Console.WriteLine($"{dateToOutput.day}/{dateToOutput.month}/{dateToOutput.year}");
+        }
+
+        static void IsValidDate(Date dateToCheck)
+        {
+            if (CheckDate(dateToCheck))
+                Console.WriteLine($"hop le!");
+            else
+                Console.WriteLine($"khong hop le!");
+        }
+
+        static bool CheckDate(Date dateToCheck)
+        {
+            if (dateToCheck.day < 1 || dateToCheck.day > 31)
+                return false;
+            if (dateToCheck.month < 1 || dateToCheck.month > 12)
+                return false;
+
+            if (dateToCheck.year < 0)
+                return false;
+
+            return true;
+        }
+
+
+        static void XuatRaDog(Human dog)
+        {
+            Console.WriteLine(dog.hoTen);
+            Console.WriteLine(dog.tuoi);
+            Console.WriteLine(dog.namSinh);
+        }
+        static Human conNguoi()
+        {
+            string hoTen = Console.ReadLine();
+            int tuoi = int.Parse(Console.ReadLine());
+            int namSinh = int.Parse(Console.ReadLine());
+            Human dog;
+            dog.hoTen = hoTen;
+            dog.tuoi = tuoi;
+            dog.namSinh = namSinh;
+            return dog;
+
+        }
         static int[] NhapMang(int soLuongPhanTu)
         {
             int[] mang = new int[soLuongPhanTu];
@@ -22,6 +102,13 @@
                 mang[i] = int.Parse(Console.ReadLine());
             }
             return mang;
+        }
+        static void XuatMang(int[] mangCanXuat)
+        {
+            for(int i = 0; i < mangCanXuat.Length; i++)
+            {
+                Console.Write($"{mangCanXuat[i]} ");
+            }
         }
         static char[] NhapMangChar()
         {
@@ -33,6 +120,13 @@
                 mang[i] = input[i];
             }
             return mang;
+        }
+
+        static char NhapMotChuCai()
+        {
+            string input = Console.ReadLine();
+
+            return input[0];
         }
 
         static int PhanTuNhoNhatTrongMang(int[] mang)
@@ -150,5 +244,56 @@
             else
                 return false;
         }
+
+        static char[] TraVeMangXoaMotChuCaiChiDinh(char[] charArr,char chuCanXoa)
+        {
+            char[] ketQua = new char[charArr.Length];
+            int counter = 0;
+            for(int i = 0; i < charArr.Length; i++)
+            {
+                if (charArr[i] == chuCanXoa)
+                    continue;
+                else
+                {
+                    ketQua[counter] = charArr[i];
+                    counter++;
+                }
+            }
+
+            return ketQua;
+        }
+
+        static char[] ThemMotChuCaiVaoMang(char[] charArr, int pos, char chuCaiCanThem)
+        {
+            char[] mangDaThemChuCai = new char[charArr.Length+1];
+            int count = 0;
+            for (int i = 0; i < charArr.Length; i++)
+            {
+                if (i == pos)
+                {
+                    mangDaThemChuCai[count++] = chuCaiCanThem;
+                }
+
+                mangDaThemChuCai[count++] = charArr[i];
+            }
+            return mangDaThemChuCai;
+        }
+
+        static int TinhSoTho(int ngay   )
+        {
+            int soThorNgay1 = 0;
+            int soThorNgay2 = 1;
+            int ngayHomNay = soThorNgay2;
+            int ngayHomTruoc = soThorNgay1;
+            int tongSoTho = 0;
+            for(int i = 2; i <= ngay; i++)
+            {
+                tongSoTho = ngayHomNay + ngayHomTruoc;
+                ngayHomTruoc = ngayHomNay;
+                ngayHomNay = tongSoTho;
+            }
+            return tongSoTho;
+        }
+        
     }
 }
