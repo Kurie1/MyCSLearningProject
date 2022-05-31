@@ -30,10 +30,11 @@ namespace MyCSLearningProejct
     {
         public Node nodeDau;
 
-        public void Init()
+        public DSLK()
         {
             nodeDau = null;
         }
+
         public void NhapDanhSach()
         {
             int soLuong = 0;
@@ -198,11 +199,36 @@ namespace MyCSLearningProejct
             Node dungTruocCuaTruocNodeA = TimNodeDungTruocNodeA(dungTruocNodeA);
             dungTruocCuaTruocNodeA.nextNode = nodeA;
         }
-        public int SoLuongPhanTu(Node nodeA) // B C 
+        public int SoLuongPhanTu() // B C 
         {
-            if (nodeA.nextNode == null) return 1;
-           
-            return SoLuongPhanTu(nodeA.nextNode) + 1;
+            Node counter = nodeDau;
+            int c = 0;
+            while (counter != null)
+            {
+                c++;
+                counter = counter.nextNode;
+            }
+            return c;
+        }
+        public void Swap(Node a,Node b)
+        {
+            int c = a.value;
+            a.value = b.value;
+            b.value = c;
+        }
+
+        public void SapXepTangDan() // 6 5 4 3 2 -> 2 3 4 5 6
+        {
+            for (Node counter = nodeDau; counter != null; counter = counter.nextNode)
+            {
+                for (Node counter2 = counter.nextNode; counter2 != null; counter2 = counter2.nextNode)
+                {
+                    if (counter.value > counter2.value)
+                    {
+                        Swap(counter, counter2);
+                    }
+                }
+            }
         }
     }
 

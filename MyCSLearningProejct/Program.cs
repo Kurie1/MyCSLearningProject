@@ -4,15 +4,11 @@
     {
         static void Main(string[] args)
         {
-            DSLK danhSachLienKet = new DSLK();
-            danhSachLienKet.Init();
-            danhSachLienKet.NhapDanhSachKhongTrung();
-           
-            //Node nodeVuaTim = danhSachLienKet.TimNode(1);
-            //danhSachLienKet.ThemTruocNodeA(nodeVuaTim, 99);
-            danhSachLienKet.XuatDanhSach();
-            int i = danhSachLienKet.SoLuongPhanTu(danhSachLienKet.nodeDau);
-            Console.Write(i);
+            BST bst = new BST();
+            bst.Input();
+            int ketQua=bst.TotalNodeInTree(bst.root);
+            Console.WriteLine(ketQua);
+
         }
 
 
@@ -294,6 +290,42 @@
             }
             return tongSoTho;
         }
+        static void Swap(ref int a,ref int b)
+        {
+            int c = a;
+            a = b;
+            b = c;
+            
+        }
         
+        static void SapXepMangTangDan(ref int[] mangA) 
+        {
+            for(int i = 0; i < mangA.Length; i++)
+            {
+                for(int j = i+1; j < mangA.Length; j++)
+                {
+                    if (mangA[i] > mangA[j])
+                    {
+                        Swap(ref mangA[i],ref mangA[j]);
+                    }
+                }
+            }
+        }
+        // 6 7 5 3 4 (10)
+        public static bool CoTonTai2SoTrongMangCongLaiBangX(int[] mangA, int soX)
+        {
+            for (int i = 0; i < mangA.Length; i++)
+            {
+                for (int j = i + 1; j < mangA.Length; j++)
+                {
+                    if (mangA[i] + mangA[j]==soX)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
     }
 }

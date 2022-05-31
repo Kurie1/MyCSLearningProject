@@ -210,5 +210,22 @@ namespace MyCSLearningProejct
             }
             return false;
         }
+        public static int TimKiemNhiPhan(int[] mangA, int left, int right, int soCanTim)
+        {
+            int middle = (right + left) / 2;
+            if (mangA[middle] == soCanTim)
+                return middle;
+
+            if (left > right || right < left) return -99;
+
+            if (mangA[middle] > soCanTim)
+            {
+                return TimKiemNhiPhan(mangA, left, middle - 1, soCanTim);
+            }
+            else
+            {
+                return TimKiemNhiPhan(mangA, middle + 1, right, soCanTim);
+            }
+        }
     }
 }
