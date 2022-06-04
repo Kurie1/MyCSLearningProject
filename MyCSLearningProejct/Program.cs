@@ -6,7 +6,7 @@
         {
             BST bst = new BST();
             bst.Input();
-            int ketQua=bst.TotalNodeInTree(bst.root);
+            int ketQua=bst.GetTreeHeight(bst.root);
             Console.WriteLine(ketQua);
 
         }

@@ -129,15 +129,55 @@ namespace MyCSLearningProejct
                 AddHelper(nodeToAdd, ref nodeToCompare.leftNode);
             }
         }
-        
+        /*
+         
+                6
+              3   8
+             1   7 12      
+         
+         
+         */
 
         public int TotalNodeInTree(Node1 node)
-        {        
-            
+        {
+            int sum = 0;
+            if (node == null)
+            {
+                return 0;
+            }
+            else
+            {
+                sum += TotalNodeInTree(node.leftNode);
+                sum += TotalNodeInTree(node.rightNode);
+                sum++;
+            }
+            return sum;
         }
-
-
-
+        public int CompareHeight(int lHeight,int rHeight)
+        { 
+            if (lHeight >= rHeight)
+               return lHeight;
+            else
+               return rHeight;
+            //giang lai cho nay ly do return
+        }
+        public int GetTreeHeight(Node1 node)
+        {
+            int compare;
+            if (node == null)
+            {
+                return 0;
+            }
+            else
+            {
+                int lHegight = 0;
+                int rHegight = 0;
+                lHegight= GetTreeHeight(node.leftNode)+1;
+                rHegight= GetTreeHeight(node.rightNode)+1;
+                compare=CompareHeight(rHegight, lHegight);
+            }
+            return compare;
+        }
     }
 
 }
