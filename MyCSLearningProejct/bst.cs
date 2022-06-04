@@ -178,6 +178,107 @@ namespace MyCSLearningProejct
             }
             return compare;
         }
+        public Node1 FindTheSmallestNode(Node1 node)
+        {
+            if (node.leftNode == null)
+            {
+                return node;
+            }
+            else
+            {
+                return FindTheSmallestNode(node.leftNode);
+            }
+        }
+
+        public Node1 FindTheLargestNode(Node1 node)
+        {
+            if (node.rightNode == null)
+            {
+                return node;
+            }
+            else
+            {
+                return FindTheLargestNode(node.rightNode);
+            }
+        }
+        public Node1 FindNodeWithValue(Node1 node, int valueToFind) // 1
+        {
+            if (node == null)
+            {
+                return null;
+            }
+            else if (node.value == valueToFind)
+            {
+                return node;
+            }
+            else
+            {
+                if (valueToFind < node.value)
+                {
+                   return FindNodeWithValue(node.leftNode, valueToFind);
+                }
+                else
+                {
+                   return FindNodeWithValue(node.rightNode, valueToFind);
+                }
+            }
+            
+        }
+        public Node1 FindParentOfNode(Node1 node, Node1 nodeToFind)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+            else if (node.leftNode == nodeToFind)
+            {
+                return node;
+            }
+            else if (node.rightNode == nodeToFind)
+            {
+                return node;
+            }
+            else
+            {
+                if (nodeToFind.value < node.value)
+                {
+                    return FindParentOfNode(node.leftNode, nodeToFind);
+                }
+                else
+                {
+                    return FindParentOfNode(node.rightNode, nodeToFind);
+                }
+            }
+        }
+        public Node1 FindTheSecondSmallestNode(Node1 node)
+        {
+            Node1 smallestNode = FindTheSmallestNode(node);
+            if (smallestNode.rightNode == null)
+            {
+                return FindParentOfNode(node, smallestNode);
+            }
+            else
+            {
+                return FindTheSmallestNode(smallestNode.rightNode);
+            }
+        }
+        public int FindNumOfLeavesNodeInTree(Node1 node)
+        {
+            int sum = 0;
+            if (node.rightNode == null && node.rightNode == null)
+            {
+                return 1;
+            }
+            else
+            {
+                sum += FindNumOfLeavesNodeInTree(node.leftNode);
+                sum += FindNumOfLeavesNodeInTree(node.rightNode);
+
+            }
+            return sum;
+        }
+
     }
+
 
 }

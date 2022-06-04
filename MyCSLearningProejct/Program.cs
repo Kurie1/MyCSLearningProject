@@ -6,8 +6,8 @@
         {
             BST bst = new BST();
             bst.Input();
-            int ketQua=bst.GetTreeHeight(bst.root);
-            Console.WriteLine(ketQua);
+            
+            Console.WriteLine(bst.FindNumOfLeavesNodeInTree(bst.root));
 
         }
 
