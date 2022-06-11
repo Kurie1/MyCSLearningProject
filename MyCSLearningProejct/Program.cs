@@ -4,11 +4,33 @@
     {
         static void Main(string[] args)
         {
-            BST bst = new BST();
-            bst.Input();
-            
-            Console.WriteLine(bst.FindNumOfLeavesNodeInTree(bst.root));
+            AVL avl = new AVL();
+            avl.Add(10);
+            avl.Add(5);
+            avl.Add(1);
 
+            //avl.RotateRight(ref avl.root);
+            //avl.Add(1);
+            //avl.Add(1);
+            //avl.Add(11);
+            //avl.Add(12);
+            //avl.Add(-7);
+            //avl.Add(3);
+            //avl.Add(10);
+            //avl.Add(6);
+            //avl.Add(-3);
+            //avl.Add(2);
+            //avl.Add(4);
+            //avl.Add(8);
+            //avl.Add(7);
+            //avl.Add(20);
+
+            //Console.WriteLine();
+            avl.Input();
+            //Console.WriteLine(avl.FindParent(avl.FindNodeWithValue(avl.root, 1)).value);
+
+            ////Console.WriteLine(bst.DeleteNode(ref bst.root, bst.FindNodeWithValue(bst.root, 5)));
+            //avl.Output();  // 5 1 9
         }
 
 

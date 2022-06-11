@@ -12,6 +12,7 @@ namespace MyCSLearningProejct
         public int value;
         public Node1 leftNode;
         public Node1 rightNode;
+        public Node1 parentNode;
 
         public static Node1 CreateNode(int value)
         {
@@ -19,6 +20,7 @@ namespace MyCSLearningProejct
             newNode.value = value;
             newNode.leftNode = null;
             newNode.rightNode = null;
+            newNode.parentNode = null;
 
             return newNode;
         }
@@ -54,7 +56,7 @@ namespace MyCSLearningProejct
 
         public void Output()
         {
-            OutputInOrder(root);
+            OutputPreOrder(root);
         }
 
         public void OutputPreOrder(Node1 node)
@@ -99,7 +101,7 @@ namespace MyCSLearningProejct
             }
         }
 
-        public void Add(int value)
+        public virtual void Add(int value)
         {
             Node1 newNode = Node1.CreateNode(value);
             if (root == null)
@@ -108,25 +110,26 @@ namespace MyCSLearningProejct
             }
             else
             {
-                AddHelper(newNode, ref root);
+                AddHelper(newNode, ref root,root); //5
             }
         }
 
-        public void AddHelper(Node1 nodeToAdd, ref Node1 nodeToCompare)
+        public void AddHelper(Node1 nodeToAdd, ref Node1 nodeToCompare,Node1 parent)
         {
             if (nodeToCompare == null)
             {
+                nodeToAdd.parentNode = parent;
                 nodeToCompare = nodeToAdd;
                 return;
             }
 
             if (nodeToAdd.value >= nodeToCompare.value)
             {
-                AddHelper(nodeToAdd, ref nodeToCompare.rightNode);
+                AddHelper(nodeToAdd, ref nodeToCompare.rightNode, nodeToCompare);
             }
             else
             {
-                AddHelper(nodeToAdd, ref nodeToCompare.leftNode);
+                AddHelper(nodeToAdd, ref nodeToCompare.leftNode, nodeToCompare);
             }
         }
         /*
@@ -224,8 +227,20 @@ namespace MyCSLearningProejct
             }
             
         }
+
+        public Node1 FindParent(Node1 nodeToFind)
+        {
+            if (root == nodeToFind)//root
+                return null;
+
+            return nodeToFind.parentNode;
+        }
+
         public Node1 FindParentOfNode(Node1 node, Node1 nodeToFind)
         {
+            if (node == nodeToFind)//root
+                return null;
+
             if (node == null)
             {
                 return null;
@@ -262,6 +277,7 @@ namespace MyCSLearningProejct
                 return FindTheSmallestNode(smallestNode.rightNode);
             }
         }
+      
         public int FindNumOfLeavesNodeInTree(Node1 node)
         {
             int sum = 0;
@@ -276,6 +292,78 @@ namespace MyCSLearningProejct
 
             }
             return sum;
+        }
+        public bool DeleteNode(ref Node1 node, Node1 nodeToDelete)
+        {
+            if (node == null)
+                return false;
+
+            if (node.value == nodeToDelete.value)
+            {
+                Node1 parent = FindParentOfNode(root, node);
+                if (node.leftNode == null && node.rightNode == null)
+                {
+                    if (nodeToDelete.value > parent.value)
+                    {
+                        parent.rightNode = null;
+                    }
+                    else
+                    {
+                        parent.leftNode = null;
+                    }
+                }
+                else if (node.leftNode == null || node.leftNode == null)
+                {
+                    Node1 nodeChild = null;
+                    if (node.leftNode != null)
+                        nodeChild = node.leftNode;
+                    else
+                        nodeChild = node.rightNode;
+
+
+                    if (nodeToDelete.value > parent.value)
+                    {
+                        parent.rightNode = nodeChild;
+                    }
+                    else
+                    {
+                        parent.leftNode = nodeChild;
+                    }
+                }
+                else
+                {
+                    if(parent == null) //root
+                    {
+                        Node1 temp = root.rightNode;
+                        FindTheSmallestNode(temp).leftNode = root.leftNode;
+                        root = temp;
+                    }
+                    else if (nodeToDelete.value > parent.value)
+                    {
+                        parent.rightNode = nodeToDelete.rightNode;
+                        FindTheLargestNode(nodeToDelete).leftNode = nodeToDelete.leftNode;
+                    }
+                    else
+                    {
+                        parent.leftNode = nodeToDelete.rightNode;
+                        Node1 tempNode = FindTheSmallestNode(nodeToDelete.rightNode);
+                        tempNode.leftNode = nodeToDelete.leftNode;
+                    }
+                }
+
+                return true;
+            }
+            else
+            {
+                if (nodeToDelete.value < node.value)
+                {
+                    return DeleteNode(ref node.leftNode, nodeToDelete);
+                }
+                else
+                {
+                    return DeleteNode(ref node.rightNode, nodeToDelete);
+                }
+            }
         }
 
     }
