@@ -150,6 +150,7 @@ namespace MyCSLearningProejct
 
         public void RotateRight(ref Node1 node)
         {
+            Node1 parent = node.parentNode;
             Node1 leftNode = node.leftNode;
             node.leftNode = leftNode.rightNode;
             leftNode.rightNode = node;
@@ -159,6 +160,18 @@ namespace MyCSLearningProejct
             else
             {
                 node = leftNode;
+            }
+
+            if (parent != null)
+            {
+                if (parent.value > node.value)
+                {
+                    parent.leftNode = node;
+                }
+                else
+                {
+                    parent.rightNode = node;
+                }
             }
 
             SeftParenting(ref root);
