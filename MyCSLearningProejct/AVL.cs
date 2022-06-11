@@ -15,14 +15,14 @@ namespace MyCSLearningProejct
             base.Add(value);
 
             if (!IsBalance(root))
-                BalanceTree(ref root);
+                BalanceTree(root);
 
             Console.WriteLine("---");
             base.OutputPreOrder(root);
-            Console.WriteLine("---");
+            Console.WriteLine("\n---");
         }
 
-        public void BalanceTree(ref Node1 node)
+        public void BalanceTree(Node1 node)
         {
             Node1 unbalanceNode = GetUnbalanceNode(node);
             int leftHeight = GetTreeHeight(unbalanceNode.leftNode);
@@ -47,7 +47,6 @@ namespace MyCSLearningProejct
             }
             else
             {
-
                 rightHeight = GetTreeHeight(unbalanceNode.rightNode.rightNode);
                 leftHeight = GetTreeHeight(unbalanceNode.rightNode.leftNode);
                 if (rightHeight > leftHeight)
@@ -61,23 +60,28 @@ namespace MyCSLearningProejct
                     RotateRight(ref unbalanceNode.rightNode);
                     RotateLeft(ref unbalanceNode);
                 }
-
             }
-
-            
         }
 
         public void SeftParenting(ref Node1 node)
         {
+            root.parentNode = null;
+
             if (node == null)
                 return;
             else
             {
-                node.leftNode.parentNode = node;
-                node.rightNode.parentNode = node;
+                if (node.leftNode != null)
+                {
+                    node.leftNode.parentNode = node;
+                    SeftParenting(ref node.leftNode);
+                }
 
-                SeftParenting(ref node.leftNode);
-                SeftParenting(ref node.rightNode);
+                if (node.rightNode != null)
+                {
+                    node.rightNode.parentNode = node;
+                    SeftParenting(ref node.rightNode);
+                }
             }
         }
 
@@ -116,45 +120,47 @@ namespace MyCSLearningProejct
 
         public void RotateLeft(ref Node1 node)
         {
-            Node1 newRoot = node.rightNode;
-            Node1 rotate = node;
-            Node1 rotate1 = newRoot.leftNode;
-            newRoot.leftNode = rotate;
-            rotate.rightNode = rotate1;
-            
-            node = newRoot;
+            Node1 parent = node.parentNode;
+            Node1 rightNode = node.rightNode;
+            node.rightNode = rightNode.leftNode;
+            rightNode.leftNode = node;
+
+            if (root == node)
+                root = rightNode;
+            else
+            {
+                node = rightNode;
+            }
+
+            if(parent!= null)
+            {
+                if(parent.value > node.value)
+                {
+                    parent.leftNode = node;
+                }
+                else
+                {
+                    parent.rightNode = node;
+                }
+            }
+
+
+            SeftParenting(ref root);
         }
 
         public void RotateRight(ref Node1 node)
         {
-            //Node1 newRoot = node.leftNode;
-            //Node1 rotate = node;
-            //Node1 rotate1 = newRoot.rightNode;
-            //newRoot.rightNode = rotate;
-            //rotate.leftNode = rotate1;
-
-            //node = newRoot;
-
-            Node1 parent = node.parentNode;
             Node1 leftNode = node.leftNode;
             node.leftNode = leftNode.rightNode;
             leftNode.rightNode = node;
 
-            if (parent != null)
+            if (root == node)
+                root = leftNode;
+            else
             {
-                if (parent.value > leftNode.value)
-                    parent.leftNode = leftNode;
-                else
-                {
-                    parent.rightNode = leftNode;
-                }
-
-
-                
+                node = leftNode;
             }
 
-
-            node = leftNode;
             SeftParenting(ref root);
         }
 
