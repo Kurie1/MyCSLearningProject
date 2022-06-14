@@ -24,7 +24,7 @@ namespace MyCSLearningProejct
 
         public void BalanceTree(Node1 node)
         {
-            Node1 unbalanceNode = GetUnbalanceNode(node);
+            Node1 unbalanceNode = GetUnbalanceNode(node); 
             int leftHeight = GetTreeHeight(unbalanceNode.leftNode);
             int rightHeight = GetTreeHeight(unbalanceNode.rightNode);
 
